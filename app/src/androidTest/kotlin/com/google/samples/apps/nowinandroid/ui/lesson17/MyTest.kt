@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.nowinandroid.ui.lesson15
+package com.google.samples.apps.nowinandroid.ui.lesson17
 
 import androidx.compose.remote.creation.step
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.google.samples.apps.nowinandroid.MainActivity
-import com.kaspersky.components.composesupport.config.withComposeSupport
+import com.google.samples.apps.nowinandroid.ui.lesson15.HomeScreen
+import com.google.samples.apps.nowinandroid.ui.lesson15.SearchScreen
+import com.kaspersky.components.alluresupport.withForcedAllureSupport
 import com.kaspersky.kaspresso.kaspresso.Kaspresso
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
+import io.qameta.allure.kotlin.Allure.step
 import org.junit.Rule
 import org.junit.Test
 
-@HiltAndroidTest
-class ComposeTest : TestCase(Kaspresso.Builder.withComposeSupport()) {
+class MyTest : TestCase(kaspressoBuilder = Kaspresso.Builder.withForcedAllureSupport(false)) {
+
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(1)
 
@@ -38,15 +40,18 @@ class ComposeTest : TestCase(Kaspresso.Builder.withComposeSupport()) {
     @Test
     fun checkElements() {
 
+        step("Проверка элементов toolBar") {
             HomeScreen.toolbarTitle.assertTextEquals("Now in Android")
-
+        }
+        step("Проверка HomePage") {
             HomeScreen.doneButton.assertIsDisplayed()
-
-
+        }
+        step("Тап на иконку поиска") {
             HomeScreen.iconSearchToolbar.performClick()
-
+        }
+        step("Проверка элеменетов SearchScreen") {
             SearchScreen.searchTextField.assertIsDisplayed()
             SearchScreen.iconSearchScreen.assertIsDisplayed()
-
+        }
     }
 }
